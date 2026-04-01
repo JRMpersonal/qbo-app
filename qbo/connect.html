@@ -1,4 +1,31 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>Connect QuickBooks</title>
-<style>body{font-family:sans-serif;text-align:center;margin-top:100px;color:#333}</style></head>
-<body><h1>QuickBooks Integration</h1><p>Viral Media Partners LLC internal tool.</p></body></html>
+<html lang="en"><head><meta charset="UTF-8"><title>QuickBooks Connect</title>
+<style>
+body{font-family:sans-serif;text-align:center;margin-top:80px;color:#333;max-width:600px;margin:80px auto;padding:0 20px}
+code{background:#f4f4f4;padding:8px 16px;border-radius:4px;display:inline-block;word-break:break-all;font-size:0.85em;margin:16px 0}
+.box{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:24px;margin-top:24px}
+</style>
+</head>
+<body>
+<h1>QuickBooks Authorization</h1>
+<div class="box" id="result">
+  <p>Reading authorization code...</p>
+</div>
+<script>
+const params = new URLSearchParams(window.location.search);
+const code = params.get('code');
+const realmId = params.get('realmId');
+const state = params.get('state');
+const error = params.get('error');
+const box = document.getElementById('result');
+if (error) {
+  box.innerHTML = '<p style="color:red">Error: ' + error + '</p>';
+} else if (code) {
+  box.innerHTML = '<p><strong>Authorization code:</strong></p><code>' + code + '</code>' +
+    (realmId ? '<p><strong>Realm ID:</strong></p><code>' + realmId + '</code>' : '') +
+    '<p style="color:#888;font-size:0.85em">Copy both values and send to Jarvis. This code expires in 60 seconds.</p>';
+} else {
+  box.innerHTML = '<p>No authorization code found in URL.</p>';
+}
+</script>
+</body></html>
